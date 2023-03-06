@@ -55,6 +55,7 @@ class LocalDataSourceSharedPreferences implements LocalDataSource {
     _transactions = transactions;
     transactions.sort((a, b) =>
         b.ammount.compareTo(a.ammount)); // sort in descending order of amount
+
     return transactions.take(3).toList(); // get the top 3 transactions
   }
 }
