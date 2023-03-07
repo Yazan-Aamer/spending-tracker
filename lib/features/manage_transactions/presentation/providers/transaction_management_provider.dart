@@ -10,6 +10,9 @@ class TransactionManagementProvider extends ChangeNotifier {
   final TransactionRepo repository;
 
   // state
+  double _totalMonthSpending = 0;
+  double get totalMonthSpending => _totalMonthSpending;
+
   Map<String, List<Transaction>> _transactions = {};
   Map<String, List<Transaction>> get transactions => _transactions;
 
@@ -84,7 +87,7 @@ class TransactionManagementProvider extends ChangeNotifier {
     _loading = false;
   }
 
-  double totalMonthSpending() {
+  void calculateMonthSpending() {
     final keys = transactions.keys;
     final currentMonth = DateTime.now().month;
     double totalSpending = 0;
@@ -97,7 +100,8 @@ class TransactionManagementProvider extends ChangeNotifier {
         }
       }
     }
-    return totalSpending;
+    debugPrint(totalSpending.toString());
+    _totalMonthSpending = totalSpending;
   }
 
   Future<void> getTopThreeTransactions() async {

@@ -116,8 +116,3 @@ class TransactionAdditionPage extends StatelessWidget {
     );
   }
 }
-
-
-// summary
-// date/
-// transaction ammount

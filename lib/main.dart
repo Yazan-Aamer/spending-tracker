@@ -10,12 +10,9 @@ import 'core/constants.dart';
 import 'core/ui/themes.dart';
 
 Future<void> main() async {
-  await configServices();
-  sl<TransactionManagementProvider>().getAllTransactions();
-  sl<TransactionManagementProvider>().getTopThreeTransactions();
   WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const MyApp());
+  await configServices();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

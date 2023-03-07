@@ -4,13 +4,29 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/ui/widgets/app_scaffold.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   DashboardPage({super.key});
 
   @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  late TransactionManagementProvider transactionManager;
+
+  @override
+  void initState() {
+    super.initState();
+    transactionManager = context.read<TransactionManagementProvider>();
+    transactionManager.getAllTransactions().then((value) {
+      transactionManager.getTopThreeTransactions();
+      transactionManager.calculateMonthSpending();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final TransactionManagementProvider transactionManager =
-        context.watch<TransactionManagementProvider>();
+    transactionManager = context.watch<TransactionManagementProvider>();
 
     return AppScaffold(
       withDrawer: true,
@@ -29,7 +45,7 @@ class DashboardPage extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 10),
-              MoneySpentWidget(money: transactionManager.totalMonthSpending()),
+              MoneySpentWidget(money: transactionManager.totalMonthSpending),
               const SizedBox(height: 10),
               Text(
                 'Your top three spending transactions',

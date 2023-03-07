@@ -13,9 +13,6 @@
 
 ### Current issues
 
-* Theme
-** Make the theme consistent.
-
 * performance issue.
 
 

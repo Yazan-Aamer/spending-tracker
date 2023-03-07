@@ -19,38 +19,40 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: button,
-      appBar: AppBar(
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: actions,
-        title: Text(
-          title,
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: button,
+        appBar: AppBar(
+          iconTheme:
+              IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+          backgroundColor: Theme.of(context).primaryColor,
+          actions: actions,
+          title: Text(
+            title,
+            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+          ),
         ),
-      ),
-      body: body,
-      drawer: withDrawer!
-          ? AppDrawer(
-              items: [
-                DrawerItem(text: 'Dashboard', icon: Icons.home),
-                DrawerItem(text: 'Transactions', icon: Icons.attach_money)
-              ],
-              onItemSelected: (item) {
-                switch (item) {
-                  case Routes.Home:
-                    Navigator.pushNamed(context, Routes.Home);
-                    break;
+        body: body,
+        drawer: withDrawer!
+            ? AppDrawer(
+                items: [
+                  DrawerItem(text: 'Dashboard', icon: Icons.home),
+                  DrawerItem(text: 'Transactions', icon: Icons.attach_money)
+                ],
+                onItemSelected: (item) {
+                  switch (item) {
+                    case Routes.Home:
+                      Navigator.pushNamed(context, Routes.Home);
+                      break;
 
-                  case Routes.Transactions:
-                    Navigator.pushNamed(context, Routes.Transactions);
-                    break;
-                }
-              },
-            )
-          : null,
+                    case Routes.Transactions:
+                      Navigator.pushNamed(context, Routes.Transactions);
+                      break;
+                  }
+                },
+              )
+            : null,
+      ),
     );
   }
 }
