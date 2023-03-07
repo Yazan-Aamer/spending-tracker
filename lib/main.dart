@@ -8,10 +8,13 @@ import 'package:spending_tracker/sl.dart';
 
 import 'core/constants.dart';
 import 'core/ui/themes.dart';
-import 'core/ui/widgets/app_scaffold.dart';
 
 Future<void> main() async {
   await configServices();
+  sl<TransactionManagementProvider>().getAllTransactions();
+  sl<TransactionManagementProvider>().getTopThreeTransactions();
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 
@@ -28,11 +31,11 @@ class MyApp extends StatelessWidget {
         title: _title,
         initialRoute: Routes.Home,
         routes: {
-          Routes.Home: (context) => const DashboardPage(),
+          Routes.Home: (context) => DashboardPage(),
           Routes.Transactions: (context) => const AllTransactionsPage(),
           Routes.Create_transaction: (context) => TransactionAdditionPage(),
         },
-        theme: lightTheme,
+        theme: darkTheme,
       ),
     );
   }

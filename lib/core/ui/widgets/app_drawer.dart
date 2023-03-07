@@ -32,30 +32,31 @@ class AppDrawer extends StatelessWidget {
     );
 
     return Drawer(
-        child: Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          decoration:
-              BoxDecoration(color: Theme.of(context).colorScheme.primary),
-          child: SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Menu',
-                style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration:
+                BoxDecoration(color: Theme.of(context).colorScheme.primary),
+            child: SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Menu',
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                ),
               ),
             ),
           ),
-        ),
-        Expanded(
-          child: drawerItems,
-        ),
-      ],
-    ));
+          Expanded(
+            child: drawerItems,
+          ),
+        ],
+      ),
+    );
   }
 }

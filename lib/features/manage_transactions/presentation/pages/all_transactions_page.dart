@@ -22,11 +22,11 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
     final TransactionManagementProvider transactionManager =
         context.watch<TransactionManagementProvider>();
 
-    transactionManager.getAllTransactions();
     Map<String, List<Transaction>> categoryTransactionsMap =
         transactionManager.transactions;
 
     return AppScaffold(
+      withDrawer: true,
       button: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(
           context,

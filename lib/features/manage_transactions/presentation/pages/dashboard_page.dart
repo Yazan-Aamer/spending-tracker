@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/features/manage_transactions/presentation/providers/transaction_management_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/ui/widgets/app_scaffold.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final TransactionManagementProvider transactionManager =
+        context.watch<TransactionManagementProvider>();
+
     return AppScaffold(
+      withDrawer: true,
       title: 'Dashboard',
       body: Padding(
         padding: const EdgeInsets.all(32),
@@ -23,29 +29,37 @@ class DashboardPage extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 10),
-              const MoneySpentWidget(money: 400),
+              MoneySpentWidget(money: transactionManager.totalMonthSpending()),
               const SizedBox(height: 10),
               Text(
-                'Your top three spending categories',
+                'Your top three spending transactions',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               const SizedBox(height: 20),
-              const TopCategoryWidget(
-                categoryName: 'Gaming',
-                moneySpent: '10',
-              ),
-              const SizedBox(height: 10),
-              const TopCategoryWidget(
-                categoryName: 'Shopping',
-                moneySpent: '20',
-              ),
-              const SizedBox(height: 10),
-              const TopCategoryWidget(
-                categoryName: 'Landery',
-                moneySpent: '30',
-              ),
+              ...transactionManager.top3Transactions
+                  .map(
+                    (e) => TopCategoryWidget(
+                      categoryName: e.category,
+                      moneySpent: e.ammount,
+                    ),
+                  )
+                  .toList(),
+              // const TopCategoryWidget(
+              //   categoryName: 'Gaming',
+              //   moneySpent: '10',
+              // ),
+              // const SizedBox(height: 10),
+              // const TopCategoryWidget(
+              //   categoryName: 'Shopping',
+              //   moneySpent: '20',
+              // ),
+              // const SizedBox(height: 10),
+              // const TopCategoryWidget(
+              //   categoryName: 'Landery',
+              //   moneySpent: '30',
+              // ),
             ],
           ),
         ),
@@ -81,6 +95,7 @@ class TopCategoryWidget extends StatelessWidget {
         Text(categoryName),
         const SizedBox(height: 5),
         Text('\$$moneySpent'),
+        const SizedBox(height: 10),
       ],
     );
   }

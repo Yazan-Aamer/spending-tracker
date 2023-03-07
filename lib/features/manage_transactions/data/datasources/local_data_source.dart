@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/failures/exceptions.dart';
 import '../models/transaction_model.dart';
@@ -48,7 +49,6 @@ class LocalDataSourceSharedPreferences implements LocalDataSource {
 
   @override
   Future<List<TransactionModel>> getTopThreeTransactions() async {
-    if (_transactions != null) return _transactions!;
     final transactions = await getAllTransactions();
 
     // cache the data in RAM

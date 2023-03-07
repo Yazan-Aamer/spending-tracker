@@ -11,3 +11,11 @@
 * Transaction - category, summary, ammount, date,
 
 
+### Current issues
+
+* Theme
+** Make the theme consistent.
+
+* performance issue.
+
+

@@ -13,6 +13,9 @@ class TransactionManagementProvider extends ChangeNotifier {
   Map<String, List<Transaction>> _transactions = {};
   Map<String, List<Transaction>> get transactions => _transactions;
 
+  List<Transaction> _top3Transactions = [];
+  List<Transaction> get top3Transactions => _top3Transactions;
+
   bool _loading = false;
   bool get loading => _loading;
 
@@ -81,6 +84,22 @@ class TransactionManagementProvider extends ChangeNotifier {
     _loading = false;
   }
 
+  double totalMonthSpending() {
+    final keys = transactions.keys;
+    final currentMonth = DateTime.now().month;
+    double totalSpending = 0;
+
+    for (var key in keys) {
+      List<Transaction> categoryTransactions = transactions[key]!;
+      for (var t in categoryTransactions) {
+        if (t.date.month == currentMonth) {
+          totalSpending += t.ammount;
+        }
+      }
+    }
+    return totalSpending;
+  }
+
   Future<void> getTopThreeTransactions() async {
     final Either<Failure, List<Transaction>> result =
         await repository.getTopThreeTransactions();
@@ -92,9 +111,9 @@ class TransactionManagementProvider extends ChangeNotifier {
         notifyListeners();
       },
       (transactions) {
-        Map<String, List<Transaction>> transactionsMap =
-            convertDataIntoApropriateFormat(transactions);
-        _transactions = transactionsMap;
+        debugPrint(transactions.length.toString());
+        _top3Transactions = transactions;
+        _loading = false;
         notifyListeners();
       },
     );
