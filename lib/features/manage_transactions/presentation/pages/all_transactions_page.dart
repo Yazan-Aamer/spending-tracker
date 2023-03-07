@@ -26,6 +26,7 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
     // Get the Map of transactions grouped by category
     Map<String, List<Transaction>> categoryTransactionsMap =
         transactionManager.transactions;
+    final bool hasTransactions = transactionManager.transactions.length > 0;
 
     return AppScaffold(
       withDrawer: true,
@@ -38,19 +39,23 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
         child: const Icon(Icons.add),
       ),
       title: 'Transactions',
-      body: SingleChildScrollView(
-        child: ExpansionPanelList(
-          elevation: 0,
-          // Define the expansion callback function for updating the list of boolean values
-          expansionCallback: (panelIndex, isExpanded) {
-            setState(() {
-              isExpandedList[panelIndex] = !isExpandedList[panelIndex];
-            });
-          },
-          // Generate expansion panels based on the categoryTransactionsMap
-          children: getExpansionPanelsFrom(categoryTransactionsMap),
-        ),
-      ),
+      body: !hasTransactions
+          ? const Center(
+              child: Text('No Transactions'),
+            )
+          : SingleChildScrollView(
+              child: ExpansionPanelList(
+                elevation: 0,
+                // Define the expansion callback function for updating the list of boolean values
+                expansionCallback: (panelIndex, isExpanded) {
+                  setState(() {
+                    isExpandedList[panelIndex] = !isExpandedList[panelIndex];
+                  });
+                },
+                // Generate expansion panels based on the categoryTransactionsMap
+                children: getExpansionPanelsFrom(categoryTransactionsMap),
+              ),
+            ),
     );
   }
 
@@ -112,7 +117,7 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
               ),
             ),
             subtitle: Text(
-              e.value.date.difference(DateTime.now()).toString(),
+              e.value.date.toString(),
               style: TextStyle(
                 color: Theme.of(context).colorScheme.onPrimary.withOpacity(.4),
               ),
