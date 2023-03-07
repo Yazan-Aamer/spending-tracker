@@ -9,30 +9,34 @@ import '../../domain/entities/transaction.dart';
 class TransactionManagementProvider extends ChangeNotifier {
   final TransactionRepo repository;
 
-  // state
-  double _totalMonthSpending = 0;
+  // state variables
+  double _totalMonthSpending = 0; // Total spending for the current month
   double get totalMonthSpending => _totalMonthSpending;
 
-  Map<String, List<Transaction>> _transactions = {};
+  Map<String, List<Transaction>> _transactions =
+      {}; // All transactions categorized by category
   Map<String, List<Transaction>> get transactions => _transactions;
 
-  List<Transaction> _top3Transactions = [];
+  List<Transaction> _top3Transactions = []; // Top three transactions by amount
   List<Transaction> get top3Transactions => _top3Transactions;
 
-  bool _loading = false;
+  bool _loading = false; // Whether the provider is currently loading data
   bool get loading => _loading;
 
-  String _error = '';
+  String _error = ''; // The error message to display to the user
   String get error => _error;
 
   TransactionManagementProvider({required this.repository});
 
+  // Get all transactions from the repository
   Future<void> getAllTransactions() async {
     _loading = true;
-// Map<String, List<Transaction>>
 
+    // Call the repository method to get all transactions
     final Either<Failure, List<Transaction>> result =
         await repository.getAllTransactions();
+
+    // Handle the result of the repository call
     result.fold(
       (failure) {
         debugPrint("Failed to get transactions");
@@ -40,9 +44,12 @@ class TransactionManagementProvider extends ChangeNotifier {
         notifyListeners();
       },
       (transactions) {
-        // this code converts the input into apropriate data for view.
+        // Convert the list of transactions into a map of categories to transactions
         Map<String, List<Transaction>> transactionsMap =
             convertDataIntoApropriateFormat(transactions);
+
+        // Update
+
         _transactions = transactionsMap;
 
         _loading = false;
@@ -51,6 +58,8 @@ class TransactionManagementProvider extends ChangeNotifier {
     );
   }
 
+  // convert data for making use of it in the UI. this step is for making it
+  // easier for the UI to use thae data.
   Map<String, List<Transaction>> convertDataIntoApropriateFormat(
       List<Transaction> transactions) {
     final Set<String> keys = transactions.map((t) => t.category).toSet();
@@ -62,6 +71,7 @@ class TransactionManagementProvider extends ChangeNotifier {
     return transactionsMap;
   }
 
+  // create transaction and store it in the database.
   Future<void> createTransaction(Transaction transaction) async {
     _loading = true;
     TransactionModel model = TransactionModel(
@@ -87,6 +97,7 @@ class TransactionManagementProvider extends ChangeNotifier {
     _loading = false;
   }
 
+  // for calculating spending in the current month
   void calculateMonthSpending() {
     final keys = transactions.keys;
     final currentMonth = DateTime.now().month;
@@ -104,6 +115,7 @@ class TransactionManagementProvider extends ChangeNotifier {
     _totalMonthSpending = totalSpending;
   }
 
+  // getting the top three transactions
   Future<void> getTopThreeTransactions() async {
     final Either<Failure, List<Transaction>> result =
         await repository.getTopThreeTransactions();

@@ -28,27 +28,30 @@ class TransactionAdditionPage extends StatelessWidget {
       withDrawer: false,
       title: 'Your Transactions',
       actions: [
-        TextButton.icon(
-          label: Text('Next',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
-              )),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              // do somethinj
-              final transaction = Transaction(
-                category: categoryTextController.text,
-                summary: summaryController.text,
-                ammount: double.parse(transactionAmmount.text),
-                date: DateTime.parse(dateController.text),
-              );
-              transactionManager.createTransaction(transaction);
-              clearText();
-            }
-          },
-          icon: Icon(
-            Icons.check,
-            color: Theme.of(context).colorScheme.onSecondary,
+        Padding(
+          padding: const EdgeInsets.only(right: 4),
+          child: TextButton.icon(
+            label: Text('Next',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                )),
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                // do somethinj
+                final transaction = Transaction(
+                  category: categoryTextController.text,
+                  summary: summaryController.text,
+                  ammount: double.parse(transactionAmmount.text),
+                  date: DateTime.parse(dateController.text),
+                );
+                transactionManager.createTransaction(transaction);
+                clearText();
+              }
+            },
+            icon: Icon(
+              Icons.check,
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
           ),
         ),
       ],
