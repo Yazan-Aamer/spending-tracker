@@ -13,6 +13,6 @@
 
 ### Current issues
 
-* performance issue.
+performance issue - resolved.
 
 
