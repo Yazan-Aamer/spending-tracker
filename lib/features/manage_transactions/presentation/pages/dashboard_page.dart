@@ -1,48 +1,53 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/ui/widgets/app_scaffold.dart';
+
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(32),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              'This Month you have spent',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 10),
-            const MoneySpentWidget(money: 400),
-            const SizedBox(height: 10),
-            Text(
-              'Your top three spending categories',
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            const TopCategoryWidget(
-              categoryName: 'Gaming',
-              moneySpent: '10',
-            ),
-            const SizedBox(height: 10),
-            const TopCategoryWidget(
-              categoryName: 'Shopping',
-              moneySpent: '20',
-            ),
-            const SizedBox(height: 10),
-            const TopCategoryWidget(
-              categoryName: 'Landery',
-              moneySpent: '30',
-            ),
-          ],
+    return AppScaffold(
+      title: 'Dashboard',
+      body: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'This Month you have spent',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 10),
+              const MoneySpentWidget(money: 400),
+              const SizedBox(height: 10),
+              Text(
+                'Your top three spending categories',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 20),
+              const TopCategoryWidget(
+                categoryName: 'Gaming',
+                moneySpent: '10',
+              ),
+              const SizedBox(height: 10),
+              const TopCategoryWidget(
+                categoryName: 'Shopping',
+                moneySpent: '20',
+              ),
+              const SizedBox(height: 10),
+              const TopCategoryWidget(
+                categoryName: 'Landery',
+                moneySpent: '30',
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,28 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:spending_tracker/features/manage_transactions/domain/entities/transaction.dart';
+import 'package:spending_tracker/features/manage_transactions/presentation/providers/transaction_management_provider.dart';
 
 class TransactionAdditionPage extends StatelessWidget {
   TransactionAdditionPage({super.key});
   final _formKey = GlobalKey<FormState>();
+  final categoryTextController = TextEditingController();
+  final summaryController = TextEditingController();
+  final dateController = TextEditingController();
+  final transactionAmmount = TextEditingController();
+
+  void clearText() {
+    categoryTextController.clear();
+    summaryController.clear();
+    dateController.clear();
+    transactionAmmount.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final categoryTextController = TextEditingController();
-    final summaryController = TextEditingController();
-    final dateController = TextEditingController();
-    final transactionAmmount = TextEditingController();
+    final transactionManager = context.watch<TransactionManagementProvider>();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Transactions'),
         actions: [
           TextButton.icon(
-            label: const Text('Next',
+            label: Text('Next',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 )),
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 // do something
+                final transaction = Transaction(
+                  category: categoryTextController.text,
+                  summary: summaryController.text,
+                  ammount: double.parse(transactionAmmount.text),
+                  date: DateTime.now(),
+                );
+                transactionManager.createTransaction(transaction);
+                clearText();
               }
             },
             icon: const Icon(Icons.check, color: Colors.white),

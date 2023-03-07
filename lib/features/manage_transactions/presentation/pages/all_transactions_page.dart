@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:spending_tracker/core/ui/widgets/app_scaffold.dart';
+import 'package:spending_tracker/features/manage_transactions/presentation/providers/transaction_management_provider.dart';
 
+import '../../../../core/constants.dart';
 import '../../domain/entities/transaction.dart';
 
 class AllTransactionsPage extends StatefulWidget {
@@ -15,25 +19,22 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
 
   @override
   Widget build(BuildContext context) {
-// TODO:
-    var transactions_1 = List.generate(
-        5,
-        (index) => Transaction(
-              category: 'category $index',
-              summary: 'summart $index',
-              ammount: index.toDouble(),
-              date: DateTime.now(),
-            ));
-    Map<String, List<Transaction>> categoryTransactionsMap = {
-      'category-1': transactions_1,
-      'category-2': transactions_1,
-      'category-3': transactions_1,
-    };
+    final TransactionManagementProvider transactionManager =
+        context.watch<TransactionManagementProvider>();
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+    transactionManager.getAllTransactions();
+    Map<String, List<Transaction>> categoryTransactionsMap =
+        transactionManager.transactions;
+
+    return AppScaffold(
+      button: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(
+          context,
+          Routes.Create_transaction,
+        ),
+        child: const Icon(Icons.add),
+      ),
+      title: 'Transactions',
       body: SingleChildScrollView(
         child: ExpansionPanelList(
           elevation: 0,

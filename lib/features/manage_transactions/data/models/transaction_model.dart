@@ -9,10 +9,10 @@ class TransactionModel extends Transaction {
 
   factory TransactionModel.fromJson(json) {
     return TransactionModel(
-      category: json.category,
-      summary: json.summary,
-      ammount: json.ammount,
-      date: DateTime.parse(json.date),
+      category: json['category'],
+      summary: json['summary'],
+      ammount: json['ammount'],
+      date: DateTime.parse(json['date']),
     );
   }
 

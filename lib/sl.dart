@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:spending_tracker/features/manage_transactions/data/datasources/local_data_source.dart';
 import 'package:spending_tracker/features/manage_transactions/data/repos/transaction_repo_impl.dart';
 import 'package:spending_tracker/features/manage_transactions/domain/repos/transaction_repo.dart';
+import 'package:spending_tracker/features/manage_transactions/presentation/providers/transaction_management_provider.dart';
 
 final sl = GetIt.instance;
 
@@ -23,4 +24,6 @@ Future<void> configServices() async {
       () => TransactionRepoImpl(datasource: sl()));
 
   // state managers, most likely provider.
+  sl.registerFactory<TransactionManagementProvider>(
+      () => TransactionManagementProvider(repository: sl()));
 }

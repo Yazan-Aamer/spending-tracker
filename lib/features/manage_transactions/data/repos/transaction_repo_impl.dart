@@ -17,7 +17,7 @@ class TransactionRepoImpl implements TransactionRepo {
   Future<Either<Failure, bool>> createTransaction(
       TransactionModel transaction) async {
     final result = await datasource.createTransaction(transaction);
-    if (result != false) {
+    if (result == false) {
       return left(TransactionCannotBeCreatedFailure());
     }
 
