@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CategoryAdditionPage extends StatelessWidget {
-  CategoryAdditionPage({super.key});
+class TransactionAdditionPage extends StatelessWidget {
+  TransactionAdditionPage({super.key});
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,36 +30,43 @@ class CategoryAdditionPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 64),
         child: Form(
           key: _formKey,
           child: Column(children: [
             TextFormField(
               controller: categoryTextController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 labelText: 'Category',
+                labelStyle: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            const SizedBox(height: 10),
             TextFormField(
               controller: summaryController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 labelText: 'Summary',
+                labelStyle: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            const SizedBox(height: 10),
             TextFormField(
               controller: dateController,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 labelText: 'Date',
+                labelStyle: Theme.of(context).textTheme.labelMedium,
               ),
             ),
+            const SizedBox(height: 10),
             TextFormField(
               controller: transactionAmmount,
-              decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+              decoration: InputDecoration(
+                border: const UnderlineInputBorder(),
                 labelText: 'Transaction ammount',
+                labelStyle: Theme.of(context).textTheme.labelMedium,
               ),
             ),
           ]),
